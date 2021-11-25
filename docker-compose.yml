@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  productapi:
+    image: ${DOCKER_REGISTRY-}productapi
+    build:
+      context: .
+      dockerfile: ProductAPI/Dockerfile
+
+  productapi2:
+    image: ${DOCKER_REGISTRY-}productapi2
+    build:
+      context: .
+      dockerfile: ProductAPI2/Dockerfile
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    hostname: rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672

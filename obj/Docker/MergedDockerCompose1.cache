@@ -1,0 +1,83 @@
+services:
+  productapi:
+    build:
+      context: C:\Users\MohamedMM\source\repos\ProductMicroservices
+      dockerfile: ProductAPI/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: ProductAPI
+      target: base
+    container_name: ProductAPI
+    entrypoint: tail -f /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: '1'
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages;/root/.nuget/fallbackpackages2
+    image: productapi:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages --additionalProbingPath
+        /root/.nuget/fallbackpackages2  "/app/bin/Debug/net5.0/ProductAPI.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    ports:
+    - target: 80
+    tty: true
+    volumes:
+    - C:\Users\MohamedMM\source\repos\ProductMicroservices\ProductAPI:/app:rw
+    - C:\Users\MohamedMM\vsdbg\vs2017u5:/remote_debugger:rw
+    - C:\Users\MohamedMM\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\MohamedMM\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+    - C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages:/root/.nuget/fallbackpackages:ro
+    - C:\Program Files (x86)\Microsoft\Xamarin\NuGet:/root/.nuget/fallbackpackages2:ro
+    - C:\Users\MohamedMM\.nuget\packages:/root/.nuget/packages:ro
+    - C:\Users\MohamedMM\source\repos\ProductMicroservices:/src:rw
+  productapi2:
+    build:
+      context: C:\Users\MohamedMM\source\repos\ProductMicroservices
+      dockerfile: ProductAPI2/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: ProductAPI2
+      target: base
+    container_name: ProductAPI2
+    entrypoint: tail -f /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: '1'
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages;/root/.nuget/fallbackpackages2
+    image: productapi2:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages --additionalProbingPath
+        /root/.nuget/fallbackpackages2  "/app/bin/Debug/net5.0/ProductAPI2.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    ports:
+    - target: 80
+    tty: true
+    volumes:
+    - C:\Users\MohamedMM\source\repos\ProductMicroservices\ProductAPI2:/app:rw
+    - C:\Users\MohamedMM\vsdbg\vs2017u5:/remote_debugger:rw
+    - C:\Users\MohamedMM\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\MohamedMM\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+    - C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages:/root/.nuget/fallbackpackages:ro
+    - C:\Program Files (x86)\Microsoft\Xamarin\NuGet:/root/.nuget/fallbackpackages2:ro
+    - C:\Users\MohamedMM\.nuget\packages:/root/.nuget/packages:ro
+    - C:\Users\MohamedMM\source\repos\ProductMicroservices:/src:rw
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+    - published: 5672
+      target: 5672
+    - published: 15672
+      target: 15672
+version: '3.4'
